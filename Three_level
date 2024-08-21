@@ -1,0 +1,47 @@
+import random
+import string
+
+# Level 1: Textual Password Verification
+def verify_password(stored_password):
+    user_password = input("Enter your password: ")
+    return user_password == stored_password
+
+# Level 2: CAPTCHA Verification
+def generate_captcha():
+    characters = string.ascii_letters + string.digits
+    captcha = ''.join(random.choice(characters) for _ in range(6))
+    return captcha
+
+def verify_captcha():
+    captcha = generate_captcha()
+    print(f"CAPTCHA: {captcha}")
+    user_input = input("Enter the CAPTCHA: ")
+    return user_input == captcha
+
+# Level 3: Security Question Verification
+def verify_security_question(stored_answer):
+    user_answer = input("What is your mother's maiden name? ")
+    return user_answer.lower() == stored_answer.lower()
+
+# Main function to verify the user
+def three_level_security(stored_password, stored_answer):
+    if verify_password(stored_password):
+        print("Password Verified.")
+        if verify_captcha():
+            print("CAPTCHA Verified.")
+            if verify_security_question(stored_answer):
+                print("Security Question Verified.")
+                print("Access Granted!")
+            else:
+                print("Security Question Incorrect. Access Denied!")
+        else:
+            print("CAPTCHA Incorrect. Access Denied!")
+    else:
+        print("Password Incorrect. Access Denied!")
+
+# Example usage
+if __name__ == "__main__":
+    stored_password = input("Set your password: ")  # User sets their own password
+    stored_answer = input("Set your answer to the security question (What is your mother's maiden name?): ")  # User sets their own security answer
+    
+    three_level_security(stored_password, stored_answer)
